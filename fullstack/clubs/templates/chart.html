@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Clubs Ranking
+{% endblock title %}
+
+{% block scripts %}
+<script>
+    $(document).ready(function(){
+        Chart.defaults.font.size = 25;
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for item in qs %} '{{item.name}}', {%  endfor %}],
+                datasets: [{
+                    label: '$ ',
+                    data: [{% for item in qs %} {{item.money}}, {% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.9)',
+                        'rgba(54, 162, 235, 0.9)',
+                        'rgba(255, 206, 86, 0.9)',
+                        'rgba(75, 192, 192, 0.9)',
+                        'rgba(153, 102, 255, 0.9)',
+                        'rgba(255, 159, 64, 0.9)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'CLUBS'
+                    }
+                }       
+            },
+        });        
+    })
+</script>
+{% endblock scripts %}
+
+{% block content %}
+    <canvas id="myChart" width="100" height="50"></canvas>
+{% endblock content %}
